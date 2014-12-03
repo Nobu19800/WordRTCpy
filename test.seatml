@@ -12,9 +12,9 @@
       <command host="speechout">これは</command>
     </rule>
     <rule>
-      <key>OpenOffice Writer</key>
+      <key>Word</key>
       <command host="commandout">1</command>
-      <command host="speechout">OpenOffice Writer</command>
+      <command host="speechout">Word</command>
     </rule>
     <rule>
       <key>を操作するRTCです</key>
