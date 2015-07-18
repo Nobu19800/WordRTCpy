@@ -2,8 +2,8 @@
 # -*- encoding: cp932 -*-
 
 ##
-#   @file WordRTC.py
-#   @brief WordControl Component
+#   @file WordControlpy.py
+#   @brief WordControlpy Component
 
 
 
@@ -33,12 +33,12 @@ from WriterControl import *
 from WordObject import *
 
 
-wordcontrol_spec = ["implementation_id", "WordControl",
-                  "type_name",         "WordControl",
+wordcontrolpy_spec = ["implementation_id", "WordControlpy",
+                  "type_name",         "WordControlpy",
                   "description",       "Word Component",
                   "version",           "0.1",
                   "vendor",            "Miyamoto Nobuhiko",
-                  "category",          "example",
+                  "category",          "Office",
                   "activity_type",     "DataFlowComponent",
                   "max_instance",      "10",
                   "language",          "Python",
@@ -124,11 +124,11 @@ class WordConfigUpdateParam(OpenRTM_aist.ConfigurationSetListener):
 
 
 ##
-# @class WordControl
+# @class WordControlpy
 # @brief Wordを操作するためのRTCのクラス
 #
 
-class WordControl(WriterControl):
+class WordControlpy(WriterControl):
     ##
     # @brief コンストラクタ
     # @param self 
@@ -137,14 +137,14 @@ class WordControl(WriterControl):
   def __init__(self, manager):
     WriterControl.__init__(self, manager)
     
-    prop = OpenRTM_aist.Manager.instance().getConfig()
+    """prop = OpenRTM_aist.Manager.instance().getConfig()
     fn = self.getProperty(prop, "word.filename", "")
     self.m_word = WordObject()
     if fn != "":
       str1 = [fn]
       OpenRTM_aist.replaceString(str1,"/","\\")
       fn = os.path.abspath(str1[0])
-    self.m_word.Open(fn)
+    self.m_word.Open(fn)"""
 
     self.conf_filename = ["NewFile"]
     
@@ -220,6 +220,21 @@ class WordControl(WriterControl):
     WriterControl.onInitialize(self)
 
     self.bindParameter("file_path", self.conf_filename, "NewFile")
+
+    self._configsets.update("default","file_path")
+    self.m_word = WordObject()
+    fn = self.conf_filename[0]
+    
+    if fn == "NewFile":
+        fn = ""
+
+    if fn != "":
+      str1 = [fn]
+      OpenRTM_aist.replaceString(str1,"/","\\")
+      fn = os.path.abspath(str1[0])
+    
+    self.m_word.Open(fn)
+
 
     self.addConfigurationSetListener(OpenRTM_aist.ConfigurationSetListenerType.ON_SET_CONFIG_SET, WordConfigUpdateParam(self))
     
@@ -340,11 +355,11 @@ class WordControl(WriterControl):
 # @brief
 # @param manager マネージャーオブジェクト
 def MyModuleInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=wordcontrol_spec)
+    profile = OpenRTM_aist.Properties(defaults_str=wordcontrolpy_spec)
     manager.registerFactory(profile,
-                            WordControl,
+                            WordControlpy,
                             OpenRTM_aist.Delete)
-    comp = manager.createComponent("WordControl")
+    comp = manager.createComponent("WordControlpy")
 
 def main():
     
