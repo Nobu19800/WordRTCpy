@@ -2,8 +2,8 @@
 # -*- encoding: cp932 -*-
 
 ##
-#   @file WordRTC.py
-#   @brief WordControl Component
+#   @file WordObject.py
+# @brief Wordを操作するためのクラス、関数
 
 import win32com
 import pythoncom
